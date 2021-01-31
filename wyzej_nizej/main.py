@@ -1,17 +1,28 @@
 import random
+import time
 def main():
-    print(
-    """
-    Wyzej nizej:
-        Wybór losowy = 1
-        Wybór manualny = 2
-    """)
-    wybor = int(input())
-    if wybor == 1:
-        szukanie_losowe()
-    elif wybor == 2:
-        wyzej_nizej()
-def szukanie_losowe():
+
+    while True == True:
+        print(
+            """
+            Wyzej nizej:
+                Wybór losowy = 1
+                Wybór manualny = 2
+                Wybór automatyczny po pol = 3
+            """)
+
+        wybor = int(input())
+        if wybor == 1:
+            szukanie_losowe()
+        elif wybor == 2:
+            wyzej_nizej()
+        elif wybor == 3:
+            wybór_po_pol()
+        else:
+            continue
+
+
+def wybór_po_pol():
     print("Komputer wybiera losową liczbe...")
     liczba1 = random.randint(0,100)
     print("Komputer wybrał liczbę: " + str(liczba1))
@@ -19,7 +30,29 @@ def szukanie_losowe():
     mini = 0
     maks = 100
     while(not liczba2 == liczba1):
+        time.sleep(0.5)
+        if liczba1 > liczba2:
+            print("Nizej")
+            maks = liczba1
+            liczba1 = (mini+maks) // 2.0
 
+        elif liczba1 < liczba2:
+            print("Wyzej")
+            mini = liczba1
+            liczba1 = (mini+maks) // 2.0
+        print("Komputer wybrał liczbę: " + str(liczba1))
+
+    print("Udało się, ukryta liczba to liczba: " + str(liczba2))
+
+def szukanie_losowe():
+    print("Komputer wybiera losową liczbe...")
+    liczba1 = random.randint(0,100)
+    print("Komputer wybrał liczbę: " + str(liczba1))
+    liczba2 = random.randint(0,101)
+    mini = 0
+    maks = 100
+    while(not liczba2 == liczba1):
+        time.sleep(0.5)
         if liczba1 > liczba2:
             print("Nizej")
             maks = liczba1
