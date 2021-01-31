@@ -2,7 +2,7 @@ Nauka Pythona
 •	Wyżej niżej/orzeł reszka
 •	Kalkulator temperatury/wagi/odległości
 •	Szyfrowanie rot - zrobione
-•	Fizz Buzz
+•	Fizz Buzz - zrobione
 •	Kamień/Papier/Nożyce
 •	Wisielec
 •	Generator losowych słów
