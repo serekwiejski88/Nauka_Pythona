@@ -1,5 +1,5 @@
 Nauka Pythona
-•	Wyżej niżej/orzeł reszka
+•	Wyżej niżej - zrobione
 •	Kalkulator temperatury/wagi/odległości
 •	Szyfrowanie rot - zrobione
 •	Fizz Buzz
