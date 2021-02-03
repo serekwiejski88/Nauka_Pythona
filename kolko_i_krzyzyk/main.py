@@ -2,7 +2,6 @@ import os
 import random
 import time
 
-
 POLE_X = "x"
 POLE_O = "o"
 POLE_PUSTE = " "
@@ -12,30 +11,29 @@ def main():
     asciart("menu")
     wybor = int(input("Podaj numer: "))
 
-    if wybor == 2:
-        gra_1v1()
-    elif wybor == 1:
-        gra_vs_pc()
-    elif wybor == 3:
-        gra_pc_vs_pc()
-    else:
+    if 3 >= wybor >= 1:
+        gra(wybor)
+
         print("Proszę podać poprawny numer.")
 
 
-def gra_pc_vs_pc():
+def gra(wybor):
     plansza, liczba_pol_planszy = stworz_plansze()
     wypisz_plansze(plansza)
 
     for x in range(liczba_pol_planszy):
         os.system('cls')
         wypisz_plansze(plansza)
-        time.sleep(1)
-        ruch_pc_x(plansza)
+        time.sleep(0.01)
+        if wybor == 1 or wybor == 2:
+            ruch_gracz(POLE_X, plansza)
+        else:
+            ruch_pc(POLE_X, plansza)
         os.system('cls')
         wypisz_plansze(plansza)
 
         if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
+            if czy_koniec(plansza) == "Wygrał " + POLE_O:
                 asciart("X")
             else:
                 asciart("O")
@@ -43,147 +41,53 @@ def gra_pc_vs_pc():
 
         os.system('cls')
         wypisz_plansze(plansza)
-        time.sleep(1)
-        ruch_pc_o(plansza)
+        time.sleep(0.01)
+        if wybor == 2:
+            ruch_gracz(POLE_O, plansza)
+        else:
+            ruch_pc(POLE_O, plansza)
         os.system('cls')
         wypisz_plansze(plansza)
 
         if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
+            if czy_koniec(plansza) == "Wygrał " + POLE_X:
                 asciart("X")
             else:
                 asciart("O")
             break
 
 
-def gra_vs_pc():
-    plansza, liczba_pol_planszy = stworz_plansze()
-    wypisz_plansze(plansza)
-
-    for x in range(liczba_pol_planszy):
-        os.system('cls')
-        wypisz_plansze(plansza)
-        ruch_x(plansza)
-        os.system('cls')
-        wypisz_plansze(plansza)
-
-        if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
-                asciart("X")
-            else:
-                asciart("O")
-            break
-
-        os.system('cls')
-        wypisz_plansze(plansza)
-        ruch_pc(plansza)
-        os.system('cls')
-        wypisz_plansze(plansza)
-
-        if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
-                asciart("X")
-            else:
-                asciart("O")
-            break
-
-
-def gra_1v1():
-    plansza, liczba_pol_planszy = stworz_plansze()
-    wypisz_plansze(plansza)
-
-    for x in range(liczba_pol_planszy):
-        os.system('cls')
-        wypisz_plansze(plansza)
-        ruch_x(plansza)
-        os.system('cls')
-        wypisz_plansze(plansza)
-
-        if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
-                asciart("X")
-            else:
-                asciart("O")
-            break
-
-        os.system('cls')
-        wypisz_plansze(plansza)
-        ruch_o(plansza)
-        os.system('cls')
-        wypisz_plansze(plansza)
-
-        if czy_koniec(plansza) is not None:
-            if czy_koniec(plansza) == "Wygrał x":
-                asciart("X")
-            else:
-                asciart("O")
-            break
-
-
-def ruch_x(plansza):  # ruch krzyżyka
-    print("Twój ruch (x), wybierz kratke i podaj:")
+def ruch_gracz(sym, plansza):  # ruch krzyżyka
+    print("Twój ruch " + sym + ", wybierz kratke i podaj:")
 
     kol = int(input("Kolumna: ")) - 1
     wie = int(input("Rząd: ")) - 1
 
     if plansza[wie][kol] == POLE_PUSTE:
-        plansza[wie][kol] = POLE_X
+        plansza[wie][kol] = sym
     elif plansza[wie][kol] != POLE_PUSTE:
-        while plansza[wie][kol] != POLE_X:
+        while plansza[wie][kol] != sym:
             print("To nie jest puste pole...")
             kol = int(input("Kolumna: ")) - 1
             wie = int(input("Rząd: ")) - 1
             if plansza[wie][kol] == POLE_PUSTE:
-                plansza[wie][kol] = POLE_X
+                plansza[wie][kol] = sym
 
     return plansza
 
 
-def ruch_o(plansza):   # ruch kółka
-
-    print("Twój ruch (o), wybierz kratke i podaj:")
-
-    kol = int(input("Kolumna: ")) - 1
-    wie = int(input("Rząd: ")) - 1
+def ruch_pc(sym, plansza):
+    kol = random.randint(0, len(plansza[0]) - 1)
+    wie = random.randint(0, len(plansza) - 1)
 
     if plansza[wie][kol] == POLE_PUSTE:
-        plansza[wie][kol] = POLE_O
+        plansza[wie][kol] = sym
     elif plansza[wie][kol] != POLE_PUSTE:
-        while plansza[wie][kol] != POLE_O:
-            print("To nie jest puste pole...")
-            kol = int(input("Kolumna: ")) - 1
-            wie = int(input("Rząd: ")) - 1
+        while plansza[wie][kol] != sym:
+            kol = random.randint(0, len(plansza[0]) - 1)
+            wie = random.randint(0, len(plansza) - 1)
             if plansza[wie][kol] == POLE_PUSTE:
-                plansza[wie][kol] = POLE_O
-
-    return plansza
-
-def ruch_pc_o(plansza):
-
-    kol = random.randint(0, len(plansza[0])-1)
-    wie = random.randint(0, len(plansza)-1)
-
-    if plansza[wie][kol] == POLE_PUSTE:
-        plansza[wie][kol] = POLE_O
-    elif plansza[wie][kol] != POLE_PUSTE:
-        while plansza[wie][kol] != POLE_O:
-            kol = random.randint(0, len(plansza[0])-1)
-            wie = random.randint(0, len(plansza)-1)
-            if plansza[wie][kol] == POLE_PUSTE:
-                plansza[wie][kol] = POLE_O
-
-def ruch_pc_x(plansza):
-    kol = random.randint(0, len(plansza[0])-1)
-    wie = random.randint(0, len(plansza)-1)
-
-    if plansza[wie][kol] == POLE_PUSTE:
-        plansza[wie][kol] = POLE_X
-    elif plansza[wie][kol] != POLE_PUSTE:
-        while plansza[wie][kol] != POLE_X:
-            kol = random.randint(0, len(plansza[0])-1)
-            wie = random.randint(0, len(plansza)-1)
-            if plansza[wie][kol] == POLE_PUSTE:
-                plansza[wie][kol] = POLE_X
+                plansza[wie][kol] = sym
 
 
 def stworz_plansze():  # tworzy plansze
@@ -218,7 +122,7 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
             if plansza[x][y] == POLE_X:
                 ile_x += 1
                 if ile_x == 3:
-                    wynik = "Wygrał x"
+                    wynik = "Wygrał " + POLE_X
                     return wynik
                 else:
                     continue
@@ -228,7 +132,7 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
             if plansza[x][y] == POLE_O:
                 ile_o += 1
                 if ile_o == 3:
-                    wynik = "Wygrał o"
+                    wynik = "Wygrał " + POLE_O
                     return wynik
                 else:
                     continue
@@ -243,7 +147,7 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
             if plansza[y][x] == POLE_X:
                 ile_x += 1
                 if ile_x == 3:
-                    wynik = "Wygrał x"
+                    wynik = "Wygrał " + POLE_X
                     return wynik
                 else:
                     continue
@@ -252,7 +156,7 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
             if plansza[y][x] == POLE_O:
                 ile_o += 1
                 if ile_o == 3:
-                    wynik = "Wygrał o"
+                    wynik = "Wygrał " + POLE_O
                     return wynik
                 else:
                     continue
@@ -264,11 +168,11 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
         for y in range(len(plansza[0])):
             if plansza[x][y] == POLE_X:
                 try:
-                    if plansza[x-1][y+1] == POLE_X and plansza[x-2][y+2] == POLE_X or None:
-                        wynik = "Wygrał x"
+                    if plansza[x - 1][y + 1] == POLE_X and plansza[x - 2][y + 2] == POLE_X or None:
+                        wynik = "Wygrał " + POLE_X
                         return wynik
-                    elif plansza[x+1][y+1] == POLE_X and plansza[x+2][y+2] == POLE_X or None:
-                        wynik = "Wygrał x"
+                    elif plansza[x + 1][y + 1] == POLE_X and plansza[x + 2][y + 2] == POLE_X or None:
+                        wynik = "Wygrał " + POLE_X
                         return wynik
                     else:
                         continue
@@ -277,15 +181,16 @@ def czy_koniec(plansza):  # sprawdza czy trzy znaki następują po sobie pionowo
             elif plansza[x][y] == POLE_O:
                 try:
                     if plansza[x - 1][y + 1] == POLE_O and plansza[x - 2][y + 2] == POLE_O or None:
-                        wynik = "Wygrał o"
+                        wynik = "Wygrał " + POLE_O
                         return wynik
                     elif plansza[x + 1][y + 1] == POLE_O and plansza[x + 2][y + 2] == POLE_O or None:
-                        wynik = "Wygrał o"
+                        wynik = "Wygrał " + POLE_O
                         return wynik
                     else:
                         continue
                 except IndexError:
                     continue
+
 
 def asciart(wybor):
     if wybor == "menu":
@@ -308,7 +213,7 @@ def asciart(wybor):
         +-----------------------------------------------------------------------+
             """)
     elif wybor == "X":
-            print("""
+        print("""
             +-----------------------------------------------------------------------+
             |                                                                       |
             |                                                                       |
@@ -318,7 +223,7 @@ def asciart(wybor):
             |    |                                             XXXXX                |
             |    |                                             XXXXXXX              |
             |    |                                           XXX    XXXX            |
-            |    |   WYGRAL X !!!                           XXX        XXX          |
+            |    |   WYGRAL GRACZ NR 1!!!                   XXX        XXX          |
             |    |                                          XX           XXX        |
             |    +----------------------------------->     XXX             XXX      |
             |                                              XXX              XXX     |
@@ -337,7 +242,7 @@ def asciart(wybor):
             |    |                                         X                  XX    |
             |    |                                         X                   X    |
             |    |                                         X                   X    |
-            |    |   WYGRAŁ O !!!                          XX                  X    |
+            |    |   WYGRAŁ GRACZ NR 2 !!!                 XX                  X    |
             |    |                                          XX                 X    |
             |    +----------------------------------->       XXX               X    |
             |                                                  XXXX          XXX    |
@@ -345,7 +250,6 @@ def asciart(wybor):
             |                                                                       |
             +-----------------------------------------------------------------------+
             """)
-
 
 
 if __name__ == '__main__':
