@@ -34,9 +34,9 @@ def gra(wybor):
 
         if czy_koniec(plansza) is not None:
             if czy_koniec(plansza) == "Wygrał " + POLE_O:
-                asciart("X")
-            else:
                 asciart("O")
+            else:
+                asciart("X")
             break
 
         os.system('cls')
@@ -57,7 +57,7 @@ def gra(wybor):
             break
 
 
-def ruch_gracz(sym, plansza):  # ruch krzyżyka
+def ruch_gracz(sym, plansza):  # ruch gracza
     print("Twój ruch " + sym + ", wybierz kratke i podaj:")
 
     kol = int(input("Kolumna: ")) - 1
@@ -76,7 +76,7 @@ def ruch_gracz(sym, plansza):  # ruch krzyżyka
     return plansza
 
 
-def ruch_pc(sym, plansza):
+def ruch_pc(sym, plansza): # ruch komputera
     kol = random.randint(0, len(plansza[0]) - 1)
     wie = random.randint(0, len(plansza) - 1)
 
