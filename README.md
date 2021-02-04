@@ -1,6 +1,6 @@
 <h1>Nauka Pythona</h1>
-•	Kółko i krzyżyk - zrobione
-•	Wyżej niżej - zrobione <br>
+•	Kółko i krzyżyk - zrobione <br>
+•	Wyżej niżej - zrobione  <br>
 •	Szyfrowanie rot - zrobione <br>
 •	Fizz Buzz - zrobione <br>
 •	Kalkulator temperatury/wagi/odległości <br>
